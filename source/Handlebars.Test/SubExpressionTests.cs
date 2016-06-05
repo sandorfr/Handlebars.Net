@@ -1,14 +1,26 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+#if mstest
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+#else
 using NUnit.Framework;
+#endif
 
 namespace HandlebarsDotNet.Test
 {
+#if !mstest
     [TestFixture]
+#else
+    [TestClass]
+#endif
     public class SubExpressionTests
     {
+#if mstest
+        [TestMethod]
+#else
         [Test]
+#endif
         public void BasicSubExpression()
         {
             var helperName = "helper-" + Guid.NewGuid().ToString(); //randomize helper name
@@ -32,7 +44,11 @@ namespace HandlebarsDotNet.Test
             Assert.AreEqual(expected, output);
         }
 
+#if mstest
+        [TestMethod]
+#else
         [Test]
+#endif
         public void BasicSubExpressionWithStringLiteralArgument()
         {
             var helperName = "helper-" + Guid.NewGuid().ToString(); //randomize helper name
@@ -56,7 +72,11 @@ namespace HandlebarsDotNet.Test
             Assert.AreEqual(expected, output);
         }
 
+#if mstest
+        [TestMethod]
+#else
         [Test]
+#endif
         public void BasicSubExpressionWithHashArgument()
         {
             var helperName = "helper-" + Guid.NewGuid().ToString(); //randomize helper name
@@ -81,7 +101,11 @@ namespace HandlebarsDotNet.Test
             Assert.AreEqual(expected, output);
         }
 
+#if mstest
+        [TestMethod]
+#else
         [Test]
+#endif
         public void BasicSubExpressionWithNumericLiteralArguments()
         {
             var helperName = "helper-" + Guid.NewGuid().ToString(); //randomize helper name
@@ -106,7 +130,11 @@ namespace HandlebarsDotNet.Test
             Assert.AreEqual(expected, output);
         }
 
+#if mstest
+        [TestMethod]
+#else
         [Test]
+#endif
         public void BasicSubExpressionWithPathArgument()
         {
             var helperName = "helper-" + Guid.NewGuid().ToString(); //randomize helper name
@@ -132,7 +160,11 @@ namespace HandlebarsDotNet.Test
             Assert.AreEqual(expected, output);
         }
 
+#if mstest
+        [TestMethod]
+#else
         [Test]
+#endif
         public void TwoBasicSubExpressionsWithNumericLiteralArguments()
         {
             var mathHelper = "math-" + Guid.NewGuid().ToString(); //randomize helper name
@@ -157,7 +189,11 @@ namespace HandlebarsDotNet.Test
             Assert.AreEqual(expected, output);
         }
 
+#if mstest
+        [TestMethod]
+#else
         [Test]
+#endif
         public void BasicSubExpressionWithNumericAndStringLiteralArguments()
         {
             var writeHelper = "write-" + Guid.NewGuid().ToString(); //randomize helper name
@@ -182,7 +218,11 @@ namespace HandlebarsDotNet.Test
             Assert.AreEqual(expected, output);
         }
 
+#if mstest
+        [TestMethod]
+#else
         [Test]
+#endif
         public void NestedSubExpressionsWithNumericLiteralArguments()
         {
             var writeHelper = "write-" + Guid.NewGuid().ToString(); //randomize helper name

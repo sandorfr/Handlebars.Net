@@ -1,56 +1,76 @@
-﻿using NUnit.Framework;
+﻿#if mstest
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+#else
+using NUnit.Framework;
+#endif
 using System;
 using System.IO;
 using System.Collections;
 
 namespace HandlebarsDotNet.Test
 {
+#if !mstest
     [TestFixture]
+#else
+    [TestClass]
+#endif
     public class ComplexIntegrationTests
     {
-		private const string naturalLanguageListTemplate = "{{#each County}}" +
-			"{{#if @first}}" + 
-			"{{this}}" +
-			"{{else}}" +
-			"{{#if @last}}" +
-			" and {{this}}" +
-			"{{else}}" +
-			", {{this}}" +
-			"{{/if}}" +
-			"{{/if}}" +
-			"{{/each}}";
+        private const string naturalLanguageListTemplate = "{{#each County}}" +
+            "{{#if @first}}" +
+            "{{this}}" +
+            "{{else}}" +
+            "{{#if @last}}" +
+            " and {{this}}" +
+            "{{else}}" +
+            ", {{this}}" +
+            "{{/if}}" +
+            "{{/if}}" +
+            "{{/each}}";
 
+#if mstest
+        [TestMethod]
+#else
         [Test]
+#endif
         public void DeepIf()
         {
-            var source = 
+            var source =
 @"{{#if outer_bool}}
 {{#with a}}{{#if inner_bool}}a is true{{else}}a is false{{/if}}{{/with}}
 {{else}}
 {{#with b}}{{#if inner_bool}}b is true{{else}}b is false{{/if}}{{/with}}
 {{/if}}";
             var template = Handlebars.Compile(source);
-            var trueTrue = new {
+            var trueTrue = new
+            {
                 outer_bool = true,
-                a = new {
+                a = new
+                {
                     inner_bool = true
                 }
             };
-            var trueFalse = new {
+            var trueFalse = new
+            {
                 outer_bool = true,
-                a = new {
+                a = new
+                {
                     inner_bool = false
                 }
             };
-            var falseTrue = new {
+            var falseTrue = new
+            {
                 outer_bool = false,
-                b = new {
+                b = new
+                {
                     inner_bool = true
                 }
             };
-            var falseFalse = new {
+            var falseFalse = new
+            {
                 outer_bool = false,
-                b = new {
+                b = new
+                {
                     inner_bool = false
                 }
             };
@@ -64,23 +84,29 @@ namespace HandlebarsDotNet.Test
             Assert.AreEqual("b is false" + Environment.NewLine, resultFalseFalse);
         }
 
+#if mstest
+        [TestMethod]
+#else
         [Test]
+#endif
         public void IfImplicitIteratorHelper()
         {
             var source = "{{#if outer_bool}}{{#items}}{{link_to url text}}{{/items}}{{/if}}";
 
             var template = Handlebars.Compile(source);
 
-            var data = new {
+            var data = new
+            {
                 outer_bool = true,
-                items = new [] 
+                items = new[]
                 {
                     new { text = "Google", url = "http://google.com/" },
                     new { text = "Yahoo!", url = "http://yahoo.com/" }
                 }
             };
 
-            Handlebars.RegisterHelper("link_to", (writer, context, parameters) => {
+            Handlebars.RegisterHelper("link_to", (writer, context, parameters) =>
+            {
                 writer.WriteSafeString("<a href='" + parameters[0] + "'>" + parameters[1] + "</a>");
             });
 
@@ -88,37 +114,48 @@ namespace HandlebarsDotNet.Test
             Assert.AreEqual("<a href='http://google.com/'>Google</a><a href='http://yahoo.com/'>Yahoo!</a>", result);
         }
 
+#if mstest
+        [TestMethod]
+#else
         [Test]
+#endif
         public void BlockHelperHelper()
         {
             var source = "{{#block_helper foo}}{{link_to url text}}{{/block_helper}}";
 
-            var data = new {
-                foo = new [] 
+            var data = new
+            {
+                foo = new[]
                 {
                     new { text = "Google", url = "http://google.com/" },
                     new { text = "Yahoo!", url = "http://yahoo.com/" }
                 }
             };
 
-            Handlebars.RegisterHelper("link_to", (writer, context, parameters) => {
+            Handlebars.RegisterHelper("link_to", (writer, context, parameters) =>
+            {
                 writer.WriteSafeString("<a href='" + parameters[0] + "'>" + parameters[1] + "</a>");
             });
 
-            Handlebars.RegisterHelper("block_helper", (writer, options, context, arguments) => {
-                foreach(var item in arguments[0] as IEnumerable)
+            Handlebars.RegisterHelper("block_helper", (writer, options, context, arguments) =>
+            {
+                foreach (var item in arguments[0] as IEnumerable)
                 {
                     options.Template(writer, item);
                 }
             });
 
-			var template = Handlebars.Compile(source);
+            var template = Handlebars.Compile(source);
 
             var result = template(data);
             Assert.AreEqual("<a href='http://google.com/'>Google</a><a href='http://yahoo.com/'>Yahoo!</a>", result);
         }
 
+#if mstest
+        [TestMethod]
+#else
         [Test]
+#endif
         public void ContextTest()
         {
             var template = Handlebars.Compile(@"{{#each Foo}}{{../Bar}}: {{#each this}}{{../../Bar}}{{this}},{{/each}};{{/each}}");
@@ -128,7 +165,7 @@ namespace HandlebarsDotNet.Test
             var result = template(new
             {
                 Bar = "Foo",
-                Foo = new[] { 
+                Foo = new[] {
                     new [] {
                         "AA",
                         "AAA"
@@ -142,66 +179,94 @@ namespace HandlebarsDotNet.Test
 
             Assert.AreEqual(expected, result);
         }
-			
-		[Test]
-		public void CountyHasOneValue()
-		{
-			var data = new
-			{
-				County = new[] { "Kane" }
-			};
 
-			var template = Handlebars.Compile(naturalLanguageListTemplate);
-
-			var result = template(data);
-
-			Assert.That(result, Is.EqualTo("Kane"));
-		}
-
-		[Test]
-		public void CountyHasTwoValue()
-		{
-			var data = new
-			{
-				County = new[] { "Kane", "Salt Lake" }
-			};
-
-			var template = Handlebars.Compile(naturalLanguageListTemplate);
-
-			var result = template(data);
-
-			Assert.That(result, Is.EqualTo("Kane and Salt Lake"));
-		}
-
-		[Test]
-		public void CountyHasMoreThanTwoValue()
-		{
-			var data = new
-			{
-				County = new[] { "Kane", "Salt Lake", "Weber" }
-			};
-
-			var template = Handlebars.Compile(naturalLanguageListTemplate);
-
-			var result = template(data);
-
-			Assert.That(result, Is.EqualTo("Kane, Salt Lake and Weber"));
-		}
-
+#if mstest
+        [TestMethod]
+#else
         [Test]
+#endif
+        public void CountyHasOneValue()
+        {
+            var data = new
+            {
+                County = new[] { "Kane" }
+            };
+
+            var template = Handlebars.Compile(naturalLanguageListTemplate);
+
+            var result = template(data);
+
+#if mstest
+            Assert.AreEqual("Kane", result);
+#else
+            Assert.That(result, Is.EqualTo("Kane"));
+#endif
+        }
+
+#if mstest
+        [TestMethod]
+#else
+        [Test]
+#endif
+        public void CountyHasTwoValue()
+        {
+            var data = new
+            {
+                County = new[] { "Kane", "Salt Lake" }
+            };
+
+            var template = Handlebars.Compile(naturalLanguageListTemplate);
+
+            var result = template(data);
+
+#if mstest
+            Assert.AreEqual("Kane and Salt Lake", result);
+#else
+            Assert.That(result, Is.EqualTo("Kane and Salt Lake"));
+#endif
+        }
+
+#if mstest
+        [TestMethod]
+#else
+        [Test]
+#endif
+        public void CountyHasMoreThanTwoValue()
+        {
+            var data = new
+            {
+                County = new[] { "Kane", "Salt Lake", "Weber" }
+            };
+
+            var template = Handlebars.Compile(naturalLanguageListTemplate);
+
+            var result = template(data);
+#if mstest
+            Assert.AreEqual("Kane, Salt Lake and Weber", result);
+#else
+             Assert.That(result, Is.EqualTo("Kane, Salt Lake and Weber"));
+#endif
+        }
+
+#if mstest
+        [TestMethod]
+#else
+        [Test]
+#endif
         public void PartialWithRoot()
         {
             string source = "{{>personcity}}!";
 
             var template = Handlebars.Compile(source);
 
-            var data = new {
+            var data = new
+            {
                 name = "Marc",
                 city = "Wilmington"
             };
 
             var partialSource = "{{name}} is from {{@root.city}}";
-            using(var reader = new StringReader(partialSource))
+            using (var reader = new StringReader(partialSource))
             {
                 var partialTemplate = Handlebars.Compile(reader);
                 Handlebars.RegisterTemplate("personcity", partialTemplate);

@@ -3,14 +3,26 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using HandlebarsDotNet;
+#if mstest
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+#else
 using NUnit.Framework;
+#endif
 
 namespace HandlebarsDotNet.Test.ViewEngine
 {
+#if !mstest
     [TestFixture]
+#else
+    [TestClass]
+#endif
     public class ViewEngineTests
     {
+#if mstest
+        [TestMethod]
+#else
         [Test]
+#endif
         public void CanLoadAViewWithALayout()
         {
             //Given a layout in a subfolder
@@ -29,7 +41,12 @@ namespace HandlebarsDotNet.Test.ViewEngine
             //Then the correct output should be rendered
             Assert.AreEqual("layout start\r\nThis is the body\r\nlayout end", output);
         }
+
+#if mstest
+        [TestMethod]
+#else
         [Test]
+#endif
         public void CanLoadAViewWithALayoutInTheRoot()
         {
             //Given a layout in the root
@@ -49,7 +66,11 @@ namespace HandlebarsDotNet.Test.ViewEngine
             Assert.AreEqual("layout start\r\nThis is the body\r\nlayout end", output);
         }
 
+#if mstest
+        [TestMethod]
+#else
         [Test]
+#endif
         public void CanRenderAGlobalVariable()
         {
             //Given a layout in the root which contains an @ variable

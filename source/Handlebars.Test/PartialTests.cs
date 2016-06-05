@@ -1,14 +1,26 @@
 ﻿using System;
 using System.Collections.Generic;
+#if mstest
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+#else
 using NUnit.Framework;
+#endif
 using System.IO;
 
 namespace HandlebarsDotNet.Test
 {
+#if !mstest
     [TestFixture]
+#else
+    [TestClass]
+#endif
     public class PartialTests
     {
+#if mstest
+        [TestMethod]
+#else
         [Test]
+#endif
         public void BasicPartial()
         {
             string source = "Hello, {{>person}}!";
@@ -30,7 +42,11 @@ namespace HandlebarsDotNet.Test
             Assert.AreEqual("Hello, Marc!", result);
         }
 
+#if mstest
+        [TestMethod]
+#else
         [Test]
+#endif
         public void BasicPartialWithContext()
         {
             string source = "Hello, {{>person leadDev}}!";
@@ -54,7 +70,11 @@ namespace HandlebarsDotNet.Test
             Assert.AreEqual("Hello, Marc!", result);
         }
 
+#if mstest
+        [TestMethod]
+#else
         [Test]
+#endif
         public void BasicPartialWithStringParameter()
         {
             string source = "Hello, {{>person first='Pete'}}!";
@@ -72,7 +92,11 @@ namespace HandlebarsDotNet.Test
             Assert.AreEqual("Hello, Pete!", result);
         }
 
+#if mstest
+        [TestMethod]
+#else
         [Test]
+#endif
         public void BasicPartialWithMultipleStringParameters()
         {
             string source = "Hello, {{>person first='Pete' last=\"Sampras\"}}!";
@@ -90,7 +114,11 @@ namespace HandlebarsDotNet.Test
             Assert.AreEqual("Hello, Pete Sampras!", result);
         }
 
+#if mstest
+        [TestMethod]
+#else
         [Test]
+#endif
         public void BasicPartialWithContextParameter()
         {
             string source = "Hello, {{>person first=leadDev.marc}}!";
@@ -119,7 +147,11 @@ namespace HandlebarsDotNet.Test
             Assert.AreEqual("Hello, Marc!", result);
         }
 
+#if mstest
+        [TestMethod]
+#else
         [Test]
+#endif
         public void BasicPartialWithContextAndStringParameters()
         {
             string source = "Hello, {{>person first=leadDev.marc last='Smith'}}!";
@@ -148,7 +180,11 @@ namespace HandlebarsDotNet.Test
             Assert.AreEqual("Hello, Marc Smith!", result);
         }
 
+#if mstest
+        [TestMethod]
+#else
         [Test]
+#endif
         public void BasicPartialWithTypedParameters()
         {
             string source = "Hello, {{>person first=1 last=true}}!";
@@ -166,7 +202,11 @@ namespace HandlebarsDotNet.Test
             Assert.AreEqual("Hello, 1 True!", result);
         }
 
+#if mstest
+        [TestMethod]
+#else
         [Test]
+#endif
         public void BasicPartialWithStringParameterIncludingExpressionChars()
         {
             string source = "Hello, {{>person first='Pe ({~te~}) '}}!";
@@ -184,7 +224,11 @@ namespace HandlebarsDotNet.Test
             Assert.AreEqual("Hello, Pe ({~te~}) !", result);
         }
 
+#if mstest
+        [TestMethod]
+#else
         [Test]
+#endif
         public void DynamicPartial()
         {
             string source = "Hello, {{> (partialNameHelper)}}!";
@@ -206,7 +250,11 @@ namespace HandlebarsDotNet.Test
             Assert.AreEqual("Hello, world!", result);
         }
 
+#if mstest
+        [TestMethod]
+#else
         [Test]
+#endif
         public void DynamicPartialWithHelperArguments()
         {
             string source = "Hello, {{> (concat 'par' 'tial' item1='Na' item2='me')}}!";
@@ -229,7 +277,11 @@ namespace HandlebarsDotNet.Test
             Assert.AreEqual("Hello, world!", result);
         }
 
+#if mstest
+        [TestMethod]
+#else
         [Test]
+#endif
         public void DynamicPartialWithContext()
         {
             var source = "Hello, {{> (lookup name) context }}!";
@@ -261,7 +313,11 @@ namespace HandlebarsDotNet.Test
             Assert.AreEqual("Hello, Marc Smith!", result);
         }
 
+#if mstest
+        [TestMethod]
+#else
         [Test]
+#endif
         public void DynamicPartialWithParameters()
         {
             var source = "Hello, {{> (lookup name) first='Marc' last='Smith' }}!";
@@ -288,7 +344,11 @@ namespace HandlebarsDotNet.Test
             Assert.AreEqual("Hello, Marc Smith!", result);
         }
 
+#if mstest
+        [TestMethod]
+#else
         [Test]
+#endif
         public void SuperfluousWhitespace()
         {
             string source = "Hello, {{  >  person  }}!";

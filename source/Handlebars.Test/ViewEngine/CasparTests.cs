@@ -1,12 +1,25 @@
 ﻿using System.IO;
+#if mstest
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+#else
 using NUnit.Framework;
+#endif
+
 
 namespace HandlebarsDotNet.Test.ViewEngine
 {
+#if !mstest
     [TestFixture]
+#else
+    [TestClass]
+#endif
     public class CasparTests
     {
+#if mstest
+        [TestMethod]
+#else
         [Test]
+#endif
         public void CanRenderCasparIndexTemplate()
         {
             var fs = (new DiskFileSystem());
@@ -36,7 +49,12 @@ namespace HandlebarsDotNet.Test.ViewEngine
             var cq = CsQuery.CQ.CreateDocument(output);
             Assert.AreEqual("My Post Title", cq["h2.post-title a"].Text());
         }
+
+#if mstest
+        [TestMethod]
+#else
         [Test]
+#endif
         public void CanRenderCasparPostTemplate()
         {
             var fs = (new DiskFileSystem());
@@ -78,7 +96,11 @@ namespace HandlebarsDotNet.Test.ViewEngine
             handlebars.RegisterHelper("excerpt", (writer, context, arguments) => writer.Write("url:" + string.Join("|", arguments)));
         }
 
+#if mstest
+        [TestMethod]
+#else
         [Test]
+#endif
         public void CanRenderCasparPostNoLayoutTemplate()
         {
             var fs = (new DiskFileSystem());
