@@ -1,4 +1,9 @@
-﻿using NUnit.Framework;
+﻿#if mstest
+using Newtonsoft.Json;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+#else
+using NUnit.Framework;
+#endif
 using System;
 using System.Dynamic;
 using System.Collections.Generic;
@@ -6,11 +11,19 @@ using Newtonsoft.Json.Linq;
 
 namespace HandlebarsDotNet.Test
 {
+#if !mstest
     [TestFixture]
+#else
+    [TestClass]
+#endif
     public class DynamicTests
     {
+#if mstest
+        [TestMethod]
+#else
         [Test]
-		public void DynamicObjectBasicTest()
+#endif
+        public void DynamicObjectBasicTest()
         {
             var model = new MyDynamicModel();
 
@@ -23,8 +36,12 @@ namespace HandlebarsDotNet.Test
             Assert.AreEqual("Foo: 1\nBar: hello world", output);
         }
 
-		[Test]
-		public void JsonTestIfTruthy()
+#if mstest
+        [TestMethod]
+#else
+        [Test]
+#endif
+        public void JsonTestIfTruthy()
 		{
 			var model = Newtonsoft.Json.JsonConvert.DeserializeObject<ExpandoObject>("{\"myfield\":\"test1\",\"truthy\":\"test2\"}");
 
@@ -37,8 +54,12 @@ namespace HandlebarsDotNet.Test
 			Assert.AreEqual("test1test2", output);
 		}
 
-		[Test]
-		public void JsonTestIfFalsyMissingField()
+#if mstest
+        [TestMethod]
+#else
+        [Test]
+#endif
+        public void JsonTestIfFalsyMissingField()
 		{
 			var model = Newtonsoft.Json.JsonConvert.DeserializeObject<ExpandoObject>("{\"myfield\":\"test1\"}");
 
@@ -51,8 +72,12 @@ namespace HandlebarsDotNet.Test
 			Assert.AreEqual("test1", output);
 		}
 
-		[Test]
-		public void JsonTestIfFalsyValue()
+#if mstest
+        [TestMethod]
+#else
+        [Test]
+#endif
+        public void JsonTestIfFalsyValue()
 		{
 			var model = Newtonsoft.Json.JsonConvert.DeserializeObject<ExpandoObject>("{\"myfield\":\"test1\",\"falsy\":null}");
 
@@ -65,7 +90,11 @@ namespace HandlebarsDotNet.Test
 			Assert.AreEqual("test1", output);
 		}
 
+#if mstest
+        [TestMethod]
+#else
         [Test]
+#endif
         public void JsonTestArrays(){
             var model = Newtonsoft.Json.JsonConvert.DeserializeObject<dynamic>("[{\"Key\": \"Key1\", \"Value\": \"Val1\"},{\"Key\": \"Key2\", \"Value\": \"Val2\"}]");
 
@@ -78,7 +107,11 @@ namespace HandlebarsDotNet.Test
             Assert.AreEqual("Key1Val1Key2Val2", output);
         }
 
+#if mstest
+        [TestMethod]
+#else
         [Test]
+#endif
         public void JObjectTest() {
             object nullValue = null;
             var model = JObject.FromObject(new { Nested = new { Prop = "Prop" }, Nested2 = nullValue });
@@ -92,10 +125,18 @@ namespace HandlebarsDotNet.Test
             Assert.AreEqual("", output);
         }
 
+#if mstest
+        [TestMethod]
+#else
         [Test]
+#endif
         public void SystemJsonTestArrays()
         {
+#if mstest
+            var model = Newtonsoft.Json.JsonConvert.DeserializeObject("[{\"Key\": \"Key1\", \"Value\": \"Val1\"},{\"Key\": \"Key2\", \"Value\": \"Val2\"}]");
+#else
             var model = System.Web.Helpers.Json.Decode("[{\"Key\": \"Key1\", \"Value\": \"Val1\"},{\"Key\": \"Key2\", \"Value\": \"Val2\"}]");
+#endif
 
             var source = "{{#each this}}{{Key}}{{Value}}{{/each}}";
 

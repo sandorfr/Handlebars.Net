@@ -1,12 +1,24 @@
 ﻿using System;
+#if mstest
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+#else
 using NUnit.Framework;
+#endif
 
 namespace HandlebarsDotNet.Test
 {
+#if !mstest
     [TestFixture]
+#else
+    [TestClass]
+#endif
     public class WhitespaceTests
     {
+#if mstest
+        [TestMethod]
+#else
         [Test]
+#endif
         public void PreceedingWhitespace()
         {
             var source = "Hello, {{~name}} !";
@@ -18,7 +30,11 @@ namespace HandlebarsDotNet.Test
             Assert.AreEqual("Hello,Handlebars.Net !", result);
         }
 
+#if mstest
+        [TestMethod]
+#else
         [Test]
+#endif
         public void TrailingWhitespace()
         {
             var source = "Hello, {{name~}} !";
@@ -30,7 +46,11 @@ namespace HandlebarsDotNet.Test
             Assert.AreEqual("Hello, Handlebars.Net!", result);
         }
 
+#if mstest
+        [TestMethod]
+#else
         [Test]
+#endif
         public void PrecedingAndTrailingWhitespace()
         {
             var source = "Hello, {{~name~}} !";
@@ -42,7 +62,11 @@ namespace HandlebarsDotNet.Test
             Assert.AreEqual("Hello,Handlebars.Net!", result);
         }
 
+#if mstest
+        [TestMethod]
+#else
         [Test]
+#endif
         public void ComplexTest()
         {
             var source =

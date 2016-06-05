@@ -1,14 +1,27 @@
 ﻿using System;
+#if mstest
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+#else
 using NUnit.Framework;
+#endif
+
 using System.IO;
 
 namespace HandlebarsDotNet.Test
 {
-	[TestFixture]
-	public class TripleStashTests
+#if !mstest
+    [TestFixture]
+#else
+    [TestClass]
+#endif
+    public class TripleStashTests
 	{
-		[Test]
-		public void UnencodedPartial()
+#if mstest
+        [TestMethod]
+#else
+        [Test]
+#endif
+        public void UnencodedPartial()
 		{
 			string source = "Hello, {{{>unenc_person}}}!";
 
@@ -29,8 +42,12 @@ namespace HandlebarsDotNet.Test
 			Assert.AreEqual("Hello, <div>Marc</div>!", result);
 		}
 
-		[Test]
-		public void EncodedPartialWithUnencodedContents()
+#if mstest
+        [TestMethod]
+#else
+        [Test]
+#endif
+        public void EncodedPartialWithUnencodedContents()
 		{
 			string source = "Hello, {{>enc_person}}!";
 
@@ -51,8 +68,12 @@ namespace HandlebarsDotNet.Test
 			Assert.AreEqual("Hello, <div><div>Marc</div></div>!", result);
 		}
 
-		[Test]
-		public void UnencodedObjectEnumeratorItems()
+#if mstest
+        [TestMethod]
+#else
+        [Test]
+#endif
+        public void UnencodedObjectEnumeratorItems()
 		{
 			var source = "{{#each enumerateMe}}{{{this}}} {{/each}}";
 			var template = Handlebars.Compile(source);
@@ -68,7 +89,11 @@ namespace HandlebarsDotNet.Test
 			Assert.AreEqual("<div>hello</div> <div>world</div> ", result);
 		}
 
+#if mstest
+        [TestMethod]
+#else
         [Test]
+#endif
         public void FailingBasicTripleStash()
         {
             string source = "{{#if a_bool}}{{{dangerous_value}}}{{/if}}Hello, {{{dangerous_value}}}!";
@@ -85,7 +110,11 @@ namespace HandlebarsDotNet.Test
             Assert.AreEqual("Hello, <div>There's HTML here</div>!", result);
         }
 
-		[Test]
+#if mstest
+        [TestMethod]
+#else
+        [Test]
+#endif
         public void UnencodedEncodedUnencoded()
         {
             string source = "{{{dangerous_value}}}...{{dangerous_value}}...{{{dangerous_value}}}!";

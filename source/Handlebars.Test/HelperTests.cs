@@ -1,14 +1,26 @@
-﻿using NUnit.Framework;
+﻿#if mstest
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+#else
+using NUnit.Framework;
+#endif
 using System;
 using System.Collections;
 using System.Collections.Generic;
 
 namespace HandlebarsDotNet.Test
 {
+#if !mstest
     [TestFixture]
+#else
+    [TestClass]
+#endif
     public class HelperTests
     {
+#if mstest
+        [TestMethod]
+#else
         [Test]
+#endif
         public void HelperWithLiteralArguments()
         {
             Handlebars.RegisterHelper("myHelper", (writer, context, args) => {
@@ -30,7 +42,11 @@ namespace HandlebarsDotNet.Test
             Assert.AreEqual(expected, output);
         }
 
+#if mstest
+        [TestMethod]
+#else
         [Test]
+#endif
         public void HelperWithLiteralArgumentsWithQuotes()
         {
             var helperName = "helper-" + Guid.NewGuid().ToString(); //randomize helper name
@@ -54,7 +70,11 @@ namespace HandlebarsDotNet.Test
             Assert.AreEqual(expected, output);
         }
 
+#if mstest
+        [TestMethod]
+#else
         [Test]
+#endif
         public void InversionNoKey()
         {
             var source = "{{^key}}No key!{{/key}}";
@@ -64,7 +84,11 @@ namespace HandlebarsDotNet.Test
             Assert.AreEqual(expected, output);
         }
 
+#if mstest
+        [TestMethod]
+#else
         [Test]
+#endif
         public void InversionFalsy()
         {
             var source = "{{^key}}Falsy value!{{/key}}";
@@ -78,7 +102,11 @@ namespace HandlebarsDotNet.Test
             Assert.AreEqual(expected, output);
         }
 
+#if mstest
+        [TestMethod]
+#else
         [Test]
+#endif
         public void InversionEmptySequence()
         {
             var source = "{{^key}}Empty sequence!{{/key}}";
@@ -92,7 +120,11 @@ namespace HandlebarsDotNet.Test
             Assert.AreEqual(expected, output);
         }
 
+#if mstest
+        [TestMethod]
+#else
         [Test]
+#endif
         public void InversionNonEmptySequence()
         {
             var source = "{{^key}}Empty sequence!{{/key}}";
@@ -106,7 +138,11 @@ namespace HandlebarsDotNet.Test
             Assert.AreEqual(expected, output);
         }
 
+#if mstest
+        [TestMethod]
+#else
         [Test]
+#endif
         public void BlockHelperWithArbitraryInversion()
         {
             var source = "{{#ifCond arg1 arg2}}Args are same{{else}}Args are not same{{/ifCond}}";
@@ -144,7 +180,11 @@ namespace HandlebarsDotNet.Test
             Assert.AreEqual(expectedIsDifferent, outputIsDifferent);
         }
 
+#if mstest
+        [TestMethod]
+#else
         [Test]
+#endif
         public void HelperWithNumericArguments()
         {
             Handlebars.RegisterHelper("myHelper", (writer, context, args) => {
@@ -166,7 +206,11 @@ namespace HandlebarsDotNet.Test
             Assert.AreEqual(expected, output);
         }
 
+#if mstest
+        [TestMethod]
+#else
         [Test]
+#endif
         public void HelperWithHashArgument()
         {
             Handlebars.RegisterHelper("myHelper", (writer, context, args) => {
@@ -187,8 +231,12 @@ namespace HandlebarsDotNet.Test
 
             Assert.AreEqual(expected, output);
         }
-            
+
+#if mstest
+        [TestMethod]
+#else
         [Test]
+#endif
         public void BlockHelperWithSubExpression()
         {
             Handlebars.RegisterHelper("isEqual", (writer, context, args) =>

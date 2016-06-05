@@ -1,0 +1,325 @@
+Project Handlebars.NetStandard (.NETStandard,Version=v1.5) was previously compiled. Skipping compilation.
+Project Handlerbars.NetStandard.Test (.NETCoreApp,Version=v1.0) was previously compiled. Skipping compilation.
+Discovering Tests ... 
+Executing Tests ... 
+Passed   BasicPath
+Passed   BasicPathWhiteSpace
+Passed   BasicCurlies
+Passed   BasicCurliesWithLeadingSlash
+Passed   BasicPathArray
+Passed   BasicPathArrayChildPath
+Passed   BasicPathArrayNoSquareBracketsChildPath
+Passed   BasicPropertyOnArray
+Passed   BasicIfElse
+Passed   BasicIfElseIf
+Passed   BasicIfElseIfElse
+Failed   BasicWith
+Error Message:
+   Test method HandlebarsDotNet.Test.BasicIntegrationTests.BasicWith threw exception: 
+HandlebarsDotNet.HandlebarsRuntimeException: Template references a helper that is not registered. Could not find helper '#with'
+Stack Trace:
+    at HandlebarsDotNet.Compiler.HelperFunctionBinder.LateBindHelperExpression(BindingContext context, String helperName, IEnumerable`1 arguments) in C:\Code\Handlebars.Net\source\Handlebars\Compiler\Translation\Expression\HelperFunctionBinder.cs:line 134
+   at lambda_method(Closure , TextWriter , Object )
+   at HandlebarsDotNet.Handlebars.HandlebarsEnvironment.<>c__DisplayClass7_0.<Compile>b__0(Object context) in C:\Code\Handlebars.Net\source\Handlebars\HandlebarsEnvironment.cs:line 64
+   at HandlebarsDotNet.Test.BasicIntegrationTests.BasicWith() in C:\Code\Handlebars.Net\source\Handlebars.Test\BasicIntegrationTests.cs:line 247
+Failed   BasicWithInversion
+Error Message:
+   Test method HandlebarsDotNet.Test.BasicIntegrationTests.BasicWithInversion threw exception: 
+HandlebarsDotNet.HandlebarsRuntimeException: Template references a helper that is not registered. Could not find helper '#with'
+Stack Trace:
+    at HandlebarsDotNet.Compiler.HelperFunctionBinder.LateBindHelperExpression(BindingContext context, String helperName, IEnumerable`1 arguments) in C:\Code\Handlebars.Net\source\Handlebars\Compiler\Translation\Expression\HelperFunctionBinder.cs:line 134
+   at lambda_method(Closure , TextWriter , Object )
+   at HandlebarsDotNet.Handlebars.HandlebarsEnvironment.<>c__DisplayClass7_0.<Compile>b__0(Object context) in C:\Code\Handlebars.Net\source\Handlebars\HandlebarsEnvironment.cs:line 64
+   at HandlebarsDotNet.Test.BasicIntegrationTests.BasicWithInversion() in C:\Code\Handlebars.Net\source\Handlebars.Test\BasicIntegrationTests.cs:line 261
+Passed   BasicEncoding
+Passed   BasicComment
+Passed   BasicCommentEscaped
+Passed   BasicObjectEnumerator
+Passed   BasicObjectEnumeratorWithKey
+Passed   BasicDictionaryEnumerator
+Passed   BasicDictionaryEnumeratorWithKey
+Passed   BasicPathDictionaryStringKeyNoSquareBrackets
+Passed   BasicPathDictionaryStringKey
+Passed   BasicPathDictionaryIntKeyNoSquareBrackets
+Passed   BasicPathDictionaryLongKeyNoSquareBrackets
+Passed   BasicPathDictionaryIntKey
+Passed   BasicPathDictionaryLongKey
+Passed   DynamicWithMetadataEnumerator
+Passed   DynamicWithMetadataEnumeratorWithKey
+Passed   BasicHelper
+Passed   BasicHelperPostRegister
+Passed   BasicDeferredBlock
+Passed   BasicDeferredBlockString
+Passed   BasicDeferredBlockWithWhitespace
+Passed   BasicDeferredBlockFalsy
+Passed   BasicDeferredBlockNull
+Passed   BasicDeferredBlockEnumerable
+Passed   BasicDeferredBlockNegated
+Passed   BasicDeferredBlockNegatedContext
+Passed   BasicDeferredBlockInversion
+Passed   BasicDeferredBlockNegatedInversion
+Passed   BasicPropertyMissing
+Passed   BasicNullOrMissingSubProperty
+Passed   BasicNumericFalsy
+Passed   BasicNullFalsy
+Passed   BasicNumericTruthy
+Passed   BasicStringFalsy
+Passed   BasicEmptyArrayFalsy
+Passed   BasicTripleStash
+Passed   BasicEscape
+Passed   BasicNumberLiteral
+Passed   BasicRoot
+Passed   ImplicitConditionalBlock
+Passed   BasicDictionary
+Passed   BasicHashtable
+Passed   BasicHashtableNoSquareBrackets
+Passed   BasicMockIDictionary
+Passed   BasicMockIDictionaryNoSquareBrackets
+Passed   BasicMockIDictionaryIntKey
+Passed   BasicMockIDictionaryIntKeyNoSquareBrackets
+Passed   TestNoWhitespaceBetweenExpressions
+Passed   DictionaryIteration
+Passed   ObjectEnumeration
+Failed   DeepIf
+Error Message:
+   Test method HandlebarsDotNet.Test.ComplexIntegrationTests.DeepIf threw exception: 
+HandlebarsDotNet.HandlebarsRuntimeException: Template references a helper that is not registered. Could not find helper '#with'
+Stack Trace:
+    at HandlebarsDotNet.Compiler.HelperFunctionBinder.LateBindHelperExpression(BindingContext context, String helperName, IEnumerable`1 arguments) in C:\Code\Handlebars.Net\source\Handlebars\Compiler\Translation\Expression\HelperFunctionBinder.cs:line 134
+   at lambda_method(Closure , TextWriter , Object )
+   at HandlebarsDotNet.Handlebars.HandlebarsEnvironment.<>c__DisplayClass7_0.<Compile>b__0(Object context) in C:\Code\Handlebars.Net\source\Handlebars\HandlebarsEnvironment.cs:line 64
+   at HandlebarsDotNet.Test.ComplexIntegrationTests.DeepIf() in C:\Code\Handlebars.Net\source\Handlebars.Test\ComplexIntegrationTests.cs:line 77
+Passed   IfImplicitIteratorHelper
+Passed   BlockHelperHelper
+Passed   ContextTest
+Passed   CountyHasOneValue
+Passed   CountyHasTwoValue
+Passed   CountyHasMoreThanTwoValue
+Passed   PartialWithRoot
+Passed   LowerCamelCaseInputModelNaming
+Passed   UpperCamelCaseInputModelNaming
+Passed   SnakeCaseInputModelNaming
+Passed   NoOutputEncoding
+Passed   JsonEncoding
+Passed   DynamicObjectBasicTest
+Passed   JsonTestIfTruthy
+Passed   JsonTestIfFalsyMissingField
+Passed   JsonTestIfFalsyValue
+Passed   JsonTestArrays
+Passed   JObjectTest
+Passed   SystemJsonTestArrays
+Passed   HelperWithLiteralArguments
+Passed   HelperWithLiteralArgumentsWithQuotes
+Passed   InversionNoKey
+Passed   InversionFalsy
+Passed   InversionEmptySequence
+Passed   InversionNonEmptySequence
+Passed   BlockHelperWithArbitraryInversion
+Passed   HelperWithNumericArguments
+Passed   HelperWithHashArgument
+Passed   BlockHelperWithSubExpression
+Passed   BasicIterator
+Passed   WithIndex
+Passed   WithFirst
+Passed   WithLast
+Passed   Empty
+Passed   NullObject
+Passed   NullSequence
+Passed   NumericLiteralTest1
+Passed   NumericLiteralTest2
+Passed   NumericLiteralTest3
+Passed   NumericLiteralTest4
+Passed   NumericLiteralTest5
+Passed   NumericLiteralTest6
+Passed   NumericLiteralTest7
+Passed   NumericLiteralTest8
+Passed   NumericLiteralTest9
+Passed   NumericLiteralTest10
+Passed   NumericLiteralTest11
+Passed   BasicPartial
+Passed   BasicPartialWithContext
+Passed   BasicPartialWithStringParameter
+Passed   BasicPartialWithMultipleStringParameters
+Passed   BasicPartialWithContextParameter
+Passed   BasicPartialWithContextAndStringParameters
+Passed   BasicPartialWithTypedParameters
+Passed   BasicPartialWithStringParameterIncludingExpressionChars
+Passed   DynamicPartial
+Passed   DynamicPartialWithHelperArguments
+Passed   DynamicPartialWithContext
+Passed   DynamicPartialWithParameters
+Passed   SuperfluousWhitespace
+Passed   BasicSubExpression
+Passed   BasicSubExpressionWithStringLiteralArgument
+Passed   BasicSubExpressionWithHashArgument
+Passed   BasicSubExpressionWithNumericLiteralArguments
+Passed   BasicSubExpressionWithPathArgument
+Passed   TwoBasicSubExpressionsWithNumericLiteralArguments
+Passed   BasicSubExpressionWithNumericAndStringLiteralArguments
+Passed   NestedSubExpressionsWithNumericLiteralArguments
+Passed   UnencodedPartial
+Passed   EncodedPartialWithUnencodedContents
+Passed   UnencodedObjectEnumeratorItems
+Passed   FailingBasicTripleStash
+Passed   UnencodedEncodedUnencoded
+Passed   PreceedingWhitespace
+Passed   TrailingWhitespace
+Passed   PrecedingAndTrailingWhitespace
+Passed   ComplexTest
+Passed   CanLoadAViewWithALayout
+Passed   CanLoadAViewWithALayoutInTheRoot
+Passed   CanRenderAGlobalVariable
+============ Test Run Summary ============
+Total tests: 143. Passed: 140. Failed: 3. Skipped: 0
+Test Run Failed.
+Project Handlebars.NetStandard (.NETFramework,Version=v4.5.1) was previously compiled. Skipping compilation.
+Project Handlerbars.NetStandard.Test (.NETFramework,Version=v4.5.1) was previously compiled. Skipping compilation.
+Discovering Tests ... 
+Executing Tests ... 
+Passed   BasicPath
+Passed   BasicPathWhiteSpace
+Passed   BasicCurlies
+Passed   BasicCurliesWithLeadingSlash
+Passed   BasicPathArray
+Passed   BasicPathArrayChildPath
+Passed   BasicPathArrayNoSquareBracketsChildPath
+Passed   BasicPropertyOnArray
+Passed   BasicIfElse
+Passed   BasicIfElseIf
+Passed   BasicIfElseIfElse
+Passed   BasicWith
+Passed   BasicWithInversion
+Passed   BasicEncoding
+Passed   BasicComment
+Passed   BasicCommentEscaped
+Passed   BasicObjectEnumerator
+Passed   BasicObjectEnumeratorWithKey
+Passed   BasicDictionaryEnumerator
+Passed   BasicDictionaryEnumeratorWithKey
+Passed   BasicPathDictionaryStringKeyNoSquareBrackets
+Passed   BasicPathDictionaryStringKey
+Passed   BasicPathDictionaryIntKeyNoSquareBrackets
+Passed   BasicPathDictionaryLongKeyNoSquareBrackets
+Passed   BasicPathDictionaryIntKey
+Passed   BasicPathDictionaryLongKey
+Passed   DynamicWithMetadataEnumerator
+Passed   DynamicWithMetadataEnumeratorWithKey
+Passed   BasicHelper
+Passed   BasicHelperPostRegister
+Passed   BasicDeferredBlock
+Passed   BasicDeferredBlockString
+Passed   BasicDeferredBlockWithWhitespace
+Passed   BasicDeferredBlockFalsy
+Passed   BasicDeferredBlockNull
+Passed   BasicDeferredBlockEnumerable
+Passed   BasicDeferredBlockNegated
+Passed   BasicDeferredBlockNegatedContext
+Passed   BasicDeferredBlockInversion
+Passed   BasicDeferredBlockNegatedInversion
+Passed   BasicPropertyMissing
+Passed   BasicNullOrMissingSubProperty
+Passed   BasicNumericFalsy
+Passed   BasicNullFalsy
+Passed   BasicNumericTruthy
+Passed   BasicStringFalsy
+Passed   BasicEmptyArrayFalsy
+Passed   BasicTripleStash
+Passed   BasicEscape
+Passed   BasicNumberLiteral
+Passed   BasicRoot
+Passed   ImplicitConditionalBlock
+Passed   BasicDictionary
+Passed   BasicHashtable
+Passed   BasicHashtableNoSquareBrackets
+Passed   BasicMockIDictionary
+Passed   BasicMockIDictionaryNoSquareBrackets
+Passed   BasicMockIDictionaryIntKey
+Passed   BasicMockIDictionaryIntKeyNoSquareBrackets
+Passed   TestNoWhitespaceBetweenExpressions
+Passed   DictionaryIteration
+Passed   ObjectEnumeration
+Passed   DeepIf
+Passed   IfImplicitIteratorHelper
+Passed   BlockHelperHelper
+Passed   ContextTest
+Passed   CountyHasOneValue
+Passed   CountyHasTwoValue
+Passed   CountyHasMoreThanTwoValue
+Passed   PartialWithRoot
+Passed   LowerCamelCaseInputModelNaming
+Passed   UpperCamelCaseInputModelNaming
+Passed   SnakeCaseInputModelNaming
+Passed   NoOutputEncoding
+Passed   JsonEncoding
+Passed   DynamicObjectBasicTest
+Passed   JsonTestIfTruthy
+Passed   JsonTestIfFalsyMissingField
+Passed   JsonTestIfFalsyValue
+Passed   JsonTestArrays
+Passed   JObjectTest
+Passed   SystemJsonTestArrays
+Passed   HelperWithLiteralArguments
+Passed   HelperWithLiteralArgumentsWithQuotes
+Passed   InversionNoKey
+Passed   InversionFalsy
+Passed   InversionEmptySequence
+Passed   InversionNonEmptySequence
+Passed   BlockHelperWithArbitraryInversion
+Passed   HelperWithNumericArguments
+Passed   HelperWithHashArgument
+Passed   BlockHelperWithSubExpression
+Passed   BasicIterator
+Passed   WithIndex
+Passed   WithFirst
+Passed   WithLast
+Passed   Empty
+Passed   NullObject
+Passed   NullSequence
+Passed   NumericLiteralTest1
+Passed   NumericLiteralTest2
+Passed   NumericLiteralTest3
+Passed   NumericLiteralTest4
+Passed   NumericLiteralTest5
+Passed   NumericLiteralTest6
+Passed   NumericLiteralTest7
+Passed   NumericLiteralTest8
+Passed   NumericLiteralTest9
+Passed   NumericLiteralTest10
+Passed   NumericLiteralTest11
+Passed   BasicPartial
+Passed   BasicPartialWithContext
+Passed   BasicPartialWithStringParameter
+Passed   BasicPartialWithMultipleStringParameters
+Passed   BasicPartialWithContextParameter
+Passed   BasicPartialWithContextAndStringParameters
+Passed   BasicPartialWithTypedParameters
+Passed   BasicPartialWithStringParameterIncludingExpressionChars
+Passed   DynamicPartial
+Passed   DynamicPartialWithHelperArguments
+Passed   DynamicPartialWithContext
+Passed   DynamicPartialWithParameters
+Passed   SuperfluousWhitespace
+Passed   BasicSubExpression
+Passed   BasicSubExpressionWithStringLiteralArgument
+Passed   BasicSubExpressionWithHashArgument
+Passed   BasicSubExpressionWithNumericLiteralArguments
+Passed   BasicSubExpressionWithPathArgument
+Passed   TwoBasicSubExpressionsWithNumericLiteralArguments
+Passed   BasicSubExpressionWithNumericAndStringLiteralArguments
+Passed   NestedSubExpressionsWithNumericLiteralArguments
+Passed   UnencodedPartial
+Passed   EncodedPartialWithUnencodedContents
+Passed   UnencodedObjectEnumeratorItems
+Passed   FailingBasicTripleStash
+Passed   UnencodedEncodedUnencoded
+Passed   PreceedingWhitespace
+Passed   TrailingWhitespace
+Passed   PrecedingAndTrailingWhitespace
+Passed   ComplexTest
+Passed   CanLoadAViewWithALayout
+Passed   CanLoadAViewWithALayoutInTheRoot
+Passed   CanRenderAGlobalVariable
+============ Test Run Summary ============
+Total tests: 143. Passed: 143. Failed: 0. Skipped: 0
+Test Run Successful.
+SUMMARY: Total: 2 targets, Passed: 2, Failed: 0.

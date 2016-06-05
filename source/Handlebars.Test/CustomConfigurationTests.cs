@@ -1,11 +1,19 @@
 ﻿using System;
 using HandlebarsDotNet.Compiler.Resolvers;
 using Newtonsoft.Json;
+#if mstest
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+#else
 using NUnit.Framework;
+#endif
 
 namespace HandlebarsDotNet.Test
 {
+#if !mstest
     [TestFixture]
+#else
+    [TestClass]
+#endif
     public class CustomConfigurationTests
     {
         public IHandlebars HandlebarsInstance { get; private set; }
@@ -16,7 +24,11 @@ namespace HandlebarsDotNet.Test
                         Description = @"<b>AWESOME</b>"
                     };
 
+#if !mstest
         [TestFixtureSetUp]
+#else
+        [TestInitialize]
+#endif
         public void Init()
         {
             var configuration = new HandlebarsConfiguration
@@ -30,7 +42,11 @@ namespace HandlebarsDotNet.Test
 
         #region UpperCamelCaseExpressionNameResolver Tests
 
+#if mstest
+        [TestMethod]
+#else
         [Test]
+#endif
         public void LowerCamelCaseInputModelNaming()
         {
             var template = "Hello {{person.name}} {{person.surname}} from {{person.address.homeCountry}}. You're {{{description}}}.";
@@ -39,7 +55,11 @@ namespace HandlebarsDotNet.Test
             Assert.AreEqual(output, ExpectedOutput);
         }
 
+#if mstest
+        [TestMethod]
+#else
         [Test]
+#endif
         public void UpperCamelCaseInputModelNaming()
         {
             var template = "Hello {{person.name}} {{person.surname}} from {{person.address.homeCountry}}. You're {{{description}}}.";
@@ -48,7 +68,11 @@ namespace HandlebarsDotNet.Test
             Assert.AreEqual(output, ExpectedOutput);
         }
 
+#if mstest
+        [TestMethod]
+#else
         [Test]
+#endif
         public void SnakeCaseInputModelNaming()
         {
             var template = "Hello {{person.name}} {{person.surname}} from {{person.address.home_Country}}. You're {{{description}}}.";
@@ -70,7 +94,11 @@ namespace HandlebarsDotNet.Test
         }
 
 
+#if mstest
+        [TestMethod]
+#else
         [Test]
+#endif
         public void NoOutputEncoding()
         {
             var template =
@@ -89,7 +117,11 @@ namespace HandlebarsDotNet.Test
             Assert.AreEqual(ExpectedOutput, output);
         }
 
+#if mstest
+        [TestMethod]
+#else
         [Test]
+#endif
         public void JsonEncoding()
         {
             var template = "No html entities, {{Username}}.";
