@@ -1,12 +1,24 @@
 ﻿using System.IO;
+#if mstest
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+#else
 using NUnit.Framework;
+#endif
 
 namespace HandlebarsDotNet.Test
 {
+#if !mstest
     [TestFixture]
+#else
+    [TestClass]
+#endif
     public class WhitespaceTests
     {
+#if mstest
+        [TestMethod]
+#else
         [Test]
+#endif
         public void PreceedingWhitespace()
         {
             var source = "Hello, {{~name}} !";
@@ -18,7 +30,11 @@ namespace HandlebarsDotNet.Test
             Assert.AreEqual("Hello,Handlebars.Net !", result);
         }
 
+#if mstest
+        [TestMethod]
+#else
         [Test]
+#endif
         public void TrailingWhitespace()
         {
             var source = "Hello, {{name~}} !";
@@ -30,7 +46,11 @@ namespace HandlebarsDotNet.Test
             Assert.AreEqual("Hello, Handlebars.Net!", result);
         }
 
+#if mstest
+        [TestMethod]
+#else
         [Test]
+#endif
         public void PrecedingAndTrailingWhitespace()
         {
             var source = "Hello, {{~name~}} !";
@@ -42,7 +62,11 @@ namespace HandlebarsDotNet.Test
             Assert.AreEqual("Hello,Handlebars.Net!", result);
         }
 
+#if mstest
+        [TestMethod]
+#else
         [Test]
+#endif
         public void ComplexTest()
         {
             var source =
@@ -74,7 +98,11 @@ namespace HandlebarsDotNet.Test
             Assert.AreEqual(@"<a href=""https://google.com"">Google</a><a href=""https://bing.com"">Empty</a>", result);
         }
 
+#if mstest
+        [TestMethod]
+#else
         [Test]
+#endif
         public void StandaloneEach()
         {
             var source = "Links:\n {{#each nav}}\n  <a href=\"{{url}}\">\n    {{#if test}}\n    {{title}}\n    {{else}}\n    Empty\n    {{/if}}\n  </a>\n  {{/each}}";
@@ -101,7 +129,11 @@ namespace HandlebarsDotNet.Test
             Assert.AreEqual( "Links:\n  <a href=\"https://google.com\">\n    Google\n  </a>\n  <a href=\"https://bing.com\">\n    Empty\n  </a>\n", result);
         }
 
+#if mstest
+        [TestMethod]
+#else
         [Test]
+#endif
         public void StandaloneSection()
         {
             var source = "  {{#none}}\n{{this}}\n{{else}}\n{{none}}\n{{/none}}  ";
@@ -114,7 +146,11 @@ namespace HandlebarsDotNet.Test
             Assert.AreEqual("No people\n", result);
         }
 
+#if mstest
+        [TestMethod]
+#else
         [Test]
+#endif
         public void StandaloneInvertedSection()
         {
             var source = "  {{^some}}\n{{none}}\n{{else}}\n{{none}}\n{{/some}}  ";
@@ -127,7 +163,11 @@ namespace HandlebarsDotNet.Test
             Assert.AreEqual("No people\n", result);
         }
 
+#if mstest
+        [TestMethod]
+#else
         [Test]
+#endif
         public void StandaloneElseSection()
         {
             var source = "{{#people}}\n{{name}}\n{{else}}\n{{none}}\n{{/people}}\n";
@@ -139,7 +179,11 @@ namespace HandlebarsDotNet.Test
             Assert.AreEqual("No people\n", result);
         }
 
+#if mstest
+        [TestMethod]
+#else
         [Test]
+#endif
         public void StandaloneChainedElseSection()
         {
             var source = "{{#if people}}\n{{people.name}}\n{{else if none}}\n{{none}}\n{{/if}}\n";
@@ -151,7 +195,11 @@ namespace HandlebarsDotNet.Test
             Assert.AreEqual("No people\n", result);
         }
 
+#if mstest
+        [TestMethod]
+#else
         [Test]
+#endif
         public void StandaloneNesting()
         {
             var source = "{{#data}}\n{{#if 'true'}}\n{{this}}\n{{/if}}\n{{/data}}\nOK.";
@@ -163,7 +211,11 @@ namespace HandlebarsDotNet.Test
             Assert.AreEqual("1\n3\n5\nOK.", result);
         }
 
-		[Test]
+#if mstest
+        [TestMethod]
+#else
+        [Test]
+#endif
         public void StandaloneComment()
         {
             var source = "{{#none}}\nPeople: \n{{! this is comment }}\n{{this}}\n{{/none}}\n";
@@ -176,7 +228,11 @@ namespace HandlebarsDotNet.Test
             Assert.AreEqual("People: \nNo people\n", result);
         }
 
-		[Test]
+#if mstest
+        [TestMethod]
+#else
+        [Test]
+#endif
         public void StandaloneConsequentComments()
         {
             var source = "{{#none}}\nPeople: \n  {{! this is comment #1 }}  \n{{! this is comment #2 }}\n {{this}}\n{{/none}}\n";
@@ -189,7 +245,11 @@ namespace HandlebarsDotNet.Test
             Assert.AreEqual("People: \n No people\n", result);
         }
 
+#if mstest
+        [TestMethod]
+#else
         [Test]
+#endif
         public void StandalonePartials()
         {
             string source = "Here are:\n  {{>person}} \n {{>person}}  ";

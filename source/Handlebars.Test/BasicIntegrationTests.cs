@@ -1,4 +1,8 @@
-﻿using NUnit.Framework;
+﻿#if mstest
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+#else
+using NUnit.Framework;
+#endif
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -6,10 +10,18 @@ using System.Dynamic;
 
 namespace HandlebarsDotNet.Test
 {
+#if !mstest
     [TestFixture]
+#else
+    [TestClass]
+#endif
     public class BasicIntegrationTests
     {
+#if mstest
+        [TestMethod]
+#else
         [Test]
+#endif
         public void BasicPath()
         {
             var source = "Hello, {{name}}!";
@@ -21,7 +33,11 @@ namespace HandlebarsDotNet.Test
             Assert.AreEqual("Hello, Handlebars.Net!", result);
         }
 
+#if mstest
+        [TestMethod]
+#else
         [Test]
+#endif
         public void BasicPathWhiteSpace()
         {
             var source = "Hello, {{ name }}!";
@@ -33,7 +49,11 @@ namespace HandlebarsDotNet.Test
             Assert.AreEqual("Hello, Handlebars.Net!", result);
         }
 
+#if mstest
+        [TestMethod]
+#else
         [Test]
+#endif
         public void BasicCurlies()
         {
             var source = "Hello, {name}!";
@@ -45,7 +65,11 @@ namespace HandlebarsDotNet.Test
             Assert.AreEqual("Hello, {name}!", result);
         }
 
+#if mstest
+        [TestMethod]
+#else
         [Test]
+#endif
         public void BasicCurliesWithLeadingSlash()
         {
             var source = "Hello, \\{name\\}!";
@@ -57,7 +81,11 @@ namespace HandlebarsDotNet.Test
             Assert.AreEqual("Hello, \\{name\\}!", result);
         }
 
+#if mstest
+        [TestMethod]
+#else
         [Test]
+#endif
         public void BasicPathArray()
         {
             var source = "Hello, {{ names.[1] }}!";
@@ -70,7 +98,11 @@ namespace HandlebarsDotNet.Test
             Assert.AreEqual("Hello, Handlebars.Net!", result);
         }
 
+#if mstest
+        [TestMethod]
+#else
         [Test]
+#endif
         public void BasicPathArrayChildPath()
         {
             var source = "Hello, {{ names.[1].name }}!";
@@ -83,7 +115,11 @@ namespace HandlebarsDotNet.Test
             Assert.AreEqual("Hello, Handlebars.Net!", result);
         }
 
+#if mstest
+        [TestMethod]
+#else
         [Test]
+#endif
         public void BasicPathArrayNoSquareBracketsChildPath()
         {
             var source = "Hello, {{ names.1.name }}!";
@@ -96,7 +132,11 @@ namespace HandlebarsDotNet.Test
             Assert.AreEqual("Hello, Handlebars.Net!", result);
         }
 
+#if mstest
+        [TestMethod]
+#else
         [Test]
+#endif
         public void BasicPropertyOnArray()
         {
             var source = "Array is {{ names.Length }} item(s) long";
@@ -109,7 +149,11 @@ namespace HandlebarsDotNet.Test
             Assert.AreEqual("Array is 2 item(s) long", result);
         }
 
+#if mstest
+        [TestMethod]
+#else
         [Test]
+#endif
         public void BasicIfElse()
         {
             var source = "Hello, {{#if basic_bool}}Bob{{else}}Sam{{/if}}!";
@@ -126,7 +170,11 @@ namespace HandlebarsDotNet.Test
             Assert.AreEqual("Hello, Sam!", resultFalse);
         }
 
+#if mstest
+        [TestMethod]
+#else
         [Test]
+#endif
         public void BasicIfElseIf()
         {
             var source = "{{#if isActive}}active{{else if isInactive}}inactive{{/if}}";
@@ -143,7 +191,11 @@ namespace HandlebarsDotNet.Test
             Assert.AreEqual("inactive", resultFalse);
         }
 
+#if mstest
+        [TestMethod]
+#else
         [Test]
+#endif
         public void BasicIfElseIfElse()
         {
             var source = "{{#if isActive}}active{{else if isInactive}}inactive{{else}}nada{{/if}}";
@@ -164,7 +216,11 @@ namespace HandlebarsDotNet.Test
             Assert.AreEqual("nada", resultElse);
         }
 
+#if mstest
+        [TestMethod]
+#else
         [Test]
+#endif
         public void BasicWith()
         {
             var source = "Hello,{{#with person}} my good friend {{name}}{{/with}}!";
@@ -178,7 +234,11 @@ namespace HandlebarsDotNet.Test
             Assert.AreEqual("Hello, my good friend Erik!", result);
         }
 
+#if mstest
+        [TestMethod]
+#else
         [Test]
+#endif
         public void BasicWithInversion()
         {
             var source = "Hello, {{#with person}} my good friend{{else}}nevermind{{/with}}";
@@ -189,7 +249,11 @@ namespace HandlebarsDotNet.Test
 			Assert.AreEqual("Hello, nevermind", template(new {person = new string[] {}}));
         }
 
+#if mstest
+        [TestMethod]
+#else
         [Test]
+#endif
         public void BasicEncoding()
         {
             var source = "Hello, {{name}}!";
@@ -202,7 +266,11 @@ namespace HandlebarsDotNet.Test
             Assert.AreEqual("Hello, &lt;b&gt;Bob&lt;/b&gt;!", result);
         }
 
+#if mstest
+        [TestMethod]
+#else
         [Test]
+#endif
         public void BasicComment()
         {
             var source = "Hello, {{!don't render me!}}{{name}}!";
@@ -215,7 +283,11 @@ namespace HandlebarsDotNet.Test
             Assert.AreEqual("Hello, Carl!", result);
         }
 
+#if mstest
+        [TestMethod]
+#else
         [Test]
+#endif
         public void BasicCommentEscaped()
         {
             var source = "Hello, {{!--don't {{render}} me!--}}{{name}}!";
@@ -228,7 +300,11 @@ namespace HandlebarsDotNet.Test
             Assert.AreEqual("Hello, Carl!", result);
         }
 
+#if mstest
+        [TestMethod]
+#else
         [Test]
+#endif
         public void BasicObjectEnumerator()
         {
             var source = "{{#each enumerateMe}}{{this}} {{/each}}";
@@ -245,7 +321,11 @@ namespace HandlebarsDotNet.Test
             Assert.AreEqual("hello world ", result);
         }
 
+#if mstest
+        [TestMethod]
+#else
         [Test]
+#endif
         public void BasicObjectEnumeratorWithKey()
         {
             var source = "{{#each enumerateMe}}{{@key}}: {{this}} {{/each}}";
@@ -262,7 +342,11 @@ namespace HandlebarsDotNet.Test
             Assert.AreEqual("foo: hello bar: world ", result);
         }
 
+#if mstest
+        [TestMethod]
+#else
         [Test]
+#endif
         public void BasicDictionaryEnumerator()
         {
             var source = "{{#each enumerateMe}}{{this}} {{/each}}";
@@ -279,7 +363,11 @@ namespace HandlebarsDotNet.Test
             Assert.AreEqual("hello world ", result);
         }
 
+#if mstest
+        [TestMethod]
+#else
         [Test]
+#endif
         public void BasicDictionaryEnumeratorWithKey()
         {
             var source = "{{#each enumerateMe}}{{@key}}: {{this}} {{/each}}";
@@ -297,7 +385,11 @@ namespace HandlebarsDotNet.Test
         }
 
 
+#if mstest
+        [TestMethod]
+#else
         [Test]
+#endif
         public void BasicPathDictionaryStringKeyNoSquareBrackets()
         {
             var source = "Hello, {{ names.Foo }}!";
@@ -313,7 +405,11 @@ namespace HandlebarsDotNet.Test
             Assert.AreEqual("Hello, Handlebars.Net!", result);
         }
 
+#if mstest
+        [TestMethod]
+#else
         [Test]
+#endif
         public void BasicPathDictionaryStringKey()
         {
             var source = "Hello, {{ names.[Foo] }}!";
@@ -329,7 +425,11 @@ namespace HandlebarsDotNet.Test
             Assert.AreEqual("Hello, Handlebars.Net!", result);
         }
 
+#if mstest
+        [TestMethod]
+#else
         [Test]
+#endif
         public void BasicPathDictionaryIntKeyNoSquareBrackets()
         {
             var source = "Hello, {{ names.42 }}!";
@@ -345,7 +445,11 @@ namespace HandlebarsDotNet.Test
             Assert.AreEqual("Hello, Handlebars.Net!", result);
         }
 
+#if mstest
+        [TestMethod]
+#else
         [Test]
+#endif
         public void BasicPathDictionaryLongKeyNoSquareBrackets()
         {
             var source = "Hello, {{ names.42 }}!";
@@ -361,7 +465,11 @@ namespace HandlebarsDotNet.Test
             Assert.AreEqual("Hello, Handlebars.Net!", result);
         }
 
+#if mstest
+        [TestMethod]
+#else
         [Test]
+#endif
         public void BasicPathDictionaryIntKey()
         {
             var source = "Hello, {{ names.[42] }}!";
@@ -377,7 +485,11 @@ namespace HandlebarsDotNet.Test
             Assert.AreEqual("Hello, Handlebars.Net!", result);
         }
 
+#if mstest
+        [TestMethod]
+#else
         [Test]
+#endif
         public void BasicPathDictionaryLongKey()
         {
             var source = "Hello, {{ names.[42] }}!";
@@ -394,7 +506,11 @@ namespace HandlebarsDotNet.Test
         }
 
 
+#if mstest
+        [TestMethod]
+#else
         [Test]
+#endif
         public void DynamicWithMetadataEnumerator()
         {
             var source = "{{#each enumerateMe}}{{this}} {{/each}}";
@@ -407,7 +523,11 @@ namespace HandlebarsDotNet.Test
             Assert.AreEqual("hello world ", result);
         }
 
+#if mstest
+        [TestMethod]
+#else
         [Test]
+#endif
         public void DynamicWithMetadataEnumeratorWithKey()
         {
             var source = "{{#each enumerateMe}}{{@key}}: {{this}} {{/each}}";
@@ -420,7 +540,11 @@ namespace HandlebarsDotNet.Test
             Assert.AreEqual("foo: hello bar: world ", result);
         }
 
+#if mstest
+        [TestMethod]
+#else
         [Test]
+#endif
         public void BasicHelper()
         {
             Handlebars.RegisterHelper("link_to", (writer, context, parameters) => {
@@ -440,8 +564,12 @@ namespace HandlebarsDotNet.Test
             Assert.AreEqual("Click here: <a href='https://github.com/rexm/handlebars.net'>Handlebars.Net</a>", result);
         }
 
-		[Test]
-		public void BasicHelperPostRegister()
+#if mstest
+        [TestMethod]
+#else
+        [Test]
+#endif
+        public void BasicHelperPostRegister()
 		{
 			string source = @"Click here: {{link_to_post_reg url text}}";
 
@@ -462,7 +590,11 @@ namespace HandlebarsDotNet.Test
 			Assert.AreEqual("Click here: <a href='https://github.com/rexm/handlebars.net'>Handlebars.Net</a>", result);
 		}
 
+#if mstest
+        [TestMethod]
+#else
         [Test]
+#endif
         public void BasicDeferredBlock()
         {
             string source = "Hello, {{#person}}{{name}}{{/person}}!";
@@ -479,7 +611,11 @@ namespace HandlebarsDotNet.Test
             Assert.AreEqual("Hello, Bill!", result);
         }
 
-		[Test]
+#if mstest
+        [TestMethod]
+#else
+        [Test]
+#endif
         public void BasicDeferredBlockString()
         {
             string source = "{{#person}} -{{this}}- {{/person}}";
@@ -490,7 +626,11 @@ namespace HandlebarsDotNet.Test
             Assert.AreEqual(" -Bill- ", result);
         }
 
+#if mstest
+        [TestMethod]
+#else
         [Test]
+#endif
         public void BasicDeferredBlockWithWhitespace()
         {
             string source = "Hello, {{ # person }}{{ name }}{{ / person }}!";
@@ -507,7 +647,11 @@ namespace HandlebarsDotNet.Test
             Assert.AreEqual("Hello, Bill!", result);
         }
 
+#if mstest
+        [TestMethod]
+#else
         [Test]
+#endif
         public void BasicDeferredBlockFalsy()
         {
             string source = "Hello, {{#person}}{{name}}{{/person}}!";
@@ -522,7 +666,11 @@ namespace HandlebarsDotNet.Test
             Assert.AreEqual("Hello, !", result);
         }
 
+#if mstest
+        [TestMethod]
+#else
         [Test]
+#endif
         public void BasicDeferredBlockNull()
         {
             string source = "Hello, {{#person}}{{name}}{{/person}}!";
@@ -537,7 +685,11 @@ namespace HandlebarsDotNet.Test
             Assert.AreEqual("Hello, !", result);
         }
 
+#if mstest
+        [TestMethod]
+#else
         [Test]
+#endif
         public void BasicDeferredBlockEnumerable()
         {
             string source = "Hello, {{#people}}{{this}} {{/people}}!";
@@ -555,7 +707,11 @@ namespace HandlebarsDotNet.Test
             Assert.AreEqual("Hello, Bill Mary !", result);
         }
 
+#if mstest
+        [TestMethod]
+#else
         [Test]
+#endif
         public void BasicDeferredBlockNegated()
         {
             string source = "Hello, {{^people}}nobody{{/people}}!";
@@ -571,7 +727,11 @@ namespace HandlebarsDotNet.Test
             Assert.AreEqual("Hello, nobody!", result);
         }
 
+#if mstest
+        [TestMethod]
+#else
         [Test]
+#endif
         public void BasicDeferredBlockNegatedContext()
         {
             var template = Handlebars.Compile("Hello, {{^obj}}{{name}}{{/obj}}!");
@@ -579,8 +739,12 @@ namespace HandlebarsDotNet.Test
             Assert.AreEqual("Hello, nobody!", template(new {name = "nobody"}));
             Assert.AreEqual("Hello, nobody!", template(new {name = "nobody", obj = new string[0]}));
         }
-        
+
+#if mstest
+        [TestMethod]
+#else
         [Test]
+#endif
         public void BasicDeferredBlockInversion()
         {
             var template = Handlebars.Compile("Hello, {{#obj}}somebody{{else}}{{name}}{{/obj}}!");
@@ -589,8 +753,12 @@ namespace HandlebarsDotNet.Test
             Assert.AreEqual("Hello, nobody!", template(new {name = "nobody", obj = false}));
             Assert.AreEqual("Hello, nobody!", template(new {name = "nobody", obj = new string[0]}));
         }
-        
+
+#if mstest
+        [TestMethod]
+#else
         [Test]
+#endif
         public void BasicDeferredBlockNegatedInversion()
         {
             var template = Handlebars.Compile("Hello, {{^obj}}nobody{{else}}{{name}}{{/obj}}!");
@@ -607,8 +775,12 @@ namespace HandlebarsDotNet.Test
             Assert.AreEqual("Hello, person!", template(new {obj = new {name = "person"}}));
         }
 
-		[Test]
-		public void BasicPropertyMissing()
+#if mstest
+        [TestMethod]
+#else
+        [Test]
+#endif
+        public void BasicPropertyMissing()
 		{
 			string source = "Hello, {{first}} {{last}}!";
 
@@ -622,7 +794,11 @@ namespace HandlebarsDotNet.Test
 			Assert.AreEqual("Hello, Marc !", result);
 		}
 
+#if mstest
+        [TestMethod]
+#else
         [Test]
+#endif
         public void BasicNullOrMissingSubProperty()
         {
             string source = "Hello, {{name.first}}!";
@@ -637,8 +813,12 @@ namespace HandlebarsDotNet.Test
             Assert.AreEqual("Hello, !", result);
         }
 
-		[Test]
-		public void BasicNumericFalsy()
+#if mstest
+        [TestMethod]
+#else
+        [Test]
+#endif
+        public void BasicNumericFalsy()
 		{
 			string source = "Hello, {{#if falsy}}Truthy!{{/if}}";
 
@@ -652,7 +832,11 @@ namespace HandlebarsDotNet.Test
 			Assert.AreEqual("Hello, ", result);
 		}
 
+#if mstest
+        [TestMethod]
+#else
         [Test]
+#endif
         public void BasicNullFalsy()
         {
             string source = "Hello, {{#if falsy}}Truthy!{{/if}}";
@@ -667,8 +851,12 @@ namespace HandlebarsDotNet.Test
             Assert.AreEqual("Hello, ", result);
         }
 
-		[Test]
-		public void BasicNumericTruthy()
+#if mstest
+        [TestMethod]
+#else
+        [Test]
+#endif
+        public void BasicNumericTruthy()
 		{
 			string source = "Hello, {{#if truthy}}Truthy!{{/if}}";
 
@@ -682,8 +870,12 @@ namespace HandlebarsDotNet.Test
 			Assert.AreEqual("Hello, Truthy!", result);
 		}
 
-		[Test]
-		public void BasicStringFalsy()
+#if mstest
+        [TestMethod]
+#else
+        [Test]
+#endif
+        public void BasicStringFalsy()
 		{
 			string source = "Hello, {{#if falsy}}Truthy!{{/if}}";
 
@@ -697,7 +889,11 @@ namespace HandlebarsDotNet.Test
 			Assert.AreEqual("Hello, ", result);
 		}
 
+#if mstest
+        [TestMethod]
+#else
         [Test]
+#endif
         public void BasicEmptyArrayFalsy()
         {
             var source = "{{#if Array}}stuff: {{#each Array}}{{this}}{{/each}}{{/if}}";
@@ -713,8 +909,12 @@ namespace HandlebarsDotNet.Test
             Assert.AreEqual("", result);
         }
 
-		[Test]
-		public void BasicTripleStash()
+#if mstest
+        [TestMethod]
+#else
+        [Test]
+#endif
+        public void BasicTripleStash()
 		{
 			string source = "Hello, {{{dangerous_value}}}!";
 
@@ -728,7 +928,11 @@ namespace HandlebarsDotNet.Test
 			Assert.AreEqual("Hello, <div>There's HTML here</div>!", result);
 		}
 
+#if mstest
+        [TestMethod]
+#else
         [Test]
+#endif
         public void BasicEscape()
         {
             string source = @"Hello, \{{raw_value}}!";
@@ -744,7 +948,11 @@ namespace HandlebarsDotNet.Test
             Assert.AreEqual(@"Hello, {{raw_value}}!", result);
         }
 
+#if mstest
+        [TestMethod]
+#else
         [Test]
+#endif
         public void BasicNumberLiteral()
         {
             string source = "{{eval 2  3}}";
@@ -760,7 +968,11 @@ namespace HandlebarsDotNet.Test
             Assert.AreEqual("2 3", result);
         }
 
+#if mstest
+        [TestMethod]
+#else
         [Test]
+#endif
         public void BasicRoot()
         {
             string source = "{{#people}}- {{this}} is member of {{@root.group}}\n{{/people}}";
@@ -780,7 +992,11 @@ namespace HandlebarsDotNet.Test
             Assert.AreEqual("- Rex is member of Engineering\n- Todd is member of Engineering\n", result);
         }
 
+#if mstest
+        [TestMethod]
+#else
         [Test]
+#endif
         public void ImplicitConditionalBlock()
         {
             var template =
@@ -797,7 +1013,11 @@ namespace HandlebarsDotNet.Test
             Assert.AreEqual("Welcome to New York City", result);
         }
 
+#if mstest
+        [TestMethod]
+#else
         [Test]
+#endif
         public void BasicDictionary()
         {
             var source =
@@ -828,7 +1048,11 @@ namespace HandlebarsDotNet.Test
             Assert.AreEqual(expectedResult, result);
         }
 
+#if mstest
+        [TestMethod]
+#else
         [Test]
+#endif
         public void BasicHashtable()
         {
             var source = "{{dictionary.[key]}}";
@@ -847,7 +1071,11 @@ namespace HandlebarsDotNet.Test
             Assert.AreEqual(expectedResult, result);
         }
 
+#if mstest
+        [TestMethod]
+#else
         [Test]
+#endif
         public void BasicHashtableNoSquareBrackets()
         {
             var source = "{{dictionary.key}}";
@@ -865,8 +1093,12 @@ namespace HandlebarsDotNet.Test
 
             Assert.AreEqual(expectedResult, result);
         }
-        
+
+#if mstest
+        [TestMethod]
+#else
         [Test]
+#endif
         public void BasicMockIDictionary()
         {
             var source = "{{dictionary.[key]}}";
@@ -883,7 +1115,11 @@ namespace HandlebarsDotNet.Test
             Assert.AreEqual(expectedResult, result);
         }
 
+#if mstest
+        [TestMethod]
+#else
         [Test]
+#endif
         public void DictionaryWithSpaceInKeyName()
         {
             var source = "{{dictionary.[my key]}}";
@@ -900,7 +1136,11 @@ namespace HandlebarsDotNet.Test
             Assert.AreEqual(expectedResult, result);
         }
 
+#if mstest
+        [TestMethod]
+#else
         [Test]
+#endif
         public void DictionaryWithSpaceInKeyNameAndChildProperty()
         {
             var source = "{{dictionary.[my key].prop1}}";
@@ -925,7 +1165,11 @@ namespace HandlebarsDotNet.Test
             Assert.AreEqual(expectedResult, result);
         }
 
+#if mstest
+        [TestMethod]
+#else
         [Test]
+#endif
         public void BasicMockIDictionaryNoSquareBrackets()
         {
             var source = "{{dictionary.key}}";
@@ -942,7 +1186,11 @@ namespace HandlebarsDotNet.Test
             Assert.AreEqual(expectedResult, result);
         }
 
+#if mstest
+        [TestMethod]
+#else
         [Test]
+#endif
         public void BasicMockIDictionaryIntKey()
         {
             var source = "{{dictionary.[42]}}";
@@ -959,7 +1207,11 @@ namespace HandlebarsDotNet.Test
             Assert.AreEqual(expectedResult, result);
         }
 
+#if mstest
+        [TestMethod]
+#else
         [Test]
+#endif
         public void BasicMockIDictionaryIntKeyNoSquareBrackets()
         {
             var source = "{{dictionary.42}}";
@@ -976,7 +1228,11 @@ namespace HandlebarsDotNet.Test
             Assert.AreEqual(expectedResult, result);
         }
 
+#if mstest
+        [TestMethod]
+#else
         [Test]
+#endif
         public void TestNoWhitespaceBetweenExpressions()
         {
             
@@ -1004,7 +1260,11 @@ namespace HandlebarsDotNet.Test
             Assert.AreEqual(expectedResult, result);
         }
 
+#if mstest
+        [TestMethod]
+#else
         [Test]
+#endif
         public void DictionaryIteration()
         {
             string source = @"{{#ADictionary}}{{@key}},{{value}}{{/ADictionary}}";
@@ -1023,7 +1283,11 @@ namespace HandlebarsDotNet.Test
             Assert.AreEqual("key5,14key6,15key7,16key8,17", result);
         }
 
+#if mstest
+        [TestMethod]
+#else
         [Test]
+#endif
         public void ObjectEnumeration()
         {
             string source = @"{{#each myObject}}{{#if this.length}}<b>{{@key}}</b>{{#each this}}<li>{{this}}</li>{{/each}}<br>{{/if}}{{/each}}";
